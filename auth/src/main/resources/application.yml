@@ -3,13 +3,13 @@ server:
 
 spring:
   application:
-    name: admin-service
+    name: auth-service
   profiles:
     active: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?serverTimezone=Asia/Seoul
-    username: postgres
-    password: "'"
+    url: jdbc:postgresql://localhost:5432/example?serverTimezone=Asia/Seoul
+    username: my
+    password: 1234
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -18,7 +18,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default-schema: example
+        default-schema: temp
         show-sql: true
         connection:
           character-encoding: UTF-8
@@ -37,4 +37,4 @@ jwt:
   key:
     public: "publicKey"
     secret: "secretKey"
-  experation: 3600000 # 단위: ms
+  expiration: 3600000 # 단위: ms

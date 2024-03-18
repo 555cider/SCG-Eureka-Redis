@@ -20,6 +20,8 @@ import com.example.auth.service.AuthService;
 
 import reactor.core.publisher.Mono;
 
+import java.security.NoSuchAlgorithmException;
+
 @RestController
 @RequestMapping
 public class AuthController {
@@ -47,10 +49,10 @@ public class AuthController {
 
     @PostMapping(value = "login", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LoginResponse>> login(ServerHttpRequest request,
-            @RequestBody LoginRequest loginRequest) throws GlobalException {
+            @RequestBody LoginRequest loginRequest) throws GlobalException, NoSuchAlgorithmException {
         LoginResponse loginResponse = authService.login(loginRequest);
+        logger.info("{}", loginResponse);
         return Mono.just(ResponseEntity.ok() //
-                .header("custom-header2", "Added in adminController") //
                 .body(loginResponse)) //
                 .onErrorMap(e -> new GlobalException("951", e.getMessage()));
     }

@@ -10,16 +10,16 @@ spring:
     gateway:
       # https://cloud.spring.io/spring-cloud-gateway/reference/html/
       routes:
-        - id: admin-service
-          uri: lb://ADMIN-SERVICE
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
           predicates:
             - name: Path
               args:
-                patterns: /admin/**
+                patterns: /auth/**
           filters:
             - name: RewritePath
               args:
-                regexp: /admin/?(?<segment>.*)
+                regexp: /auth/?(?<segment>.*)
                 replacement: /$\{segment}
             - name: RequestSize
               args:
@@ -31,13 +31,13 @@ spring:
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter:
-                  replenishRate: 1
-                  burstCapacity: 1
+                  replenishRate: 5
+                  burstCapacity: 5
                   requestedTokens: 1
                 # key-resolver: "#{@myKeyResolver}"
           metadata:
-            response-timeout: 200
-            connect-timeout: 200
+            response-timeout: 10000
+            connect-timeout: 10000
       redis-rate-limiter:
         include-headers: false
       x-forwarded:
@@ -49,8 +49,8 @@ spring:
       loadbalancer:
         use404: true
       httpclient:
-        connect-timeout: 1000
-        response-timeout: 5s
+        connect-timeout: 10000
+        response-timeout: 10s
   data:
     redis:
       host: localhost
