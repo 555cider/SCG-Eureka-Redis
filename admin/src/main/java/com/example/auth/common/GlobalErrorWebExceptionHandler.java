@@ -1,4 +1,4 @@
-package com.example.admin.common;
+package com.example.auth.common;
 
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
@@ -21,29 +21,29 @@ import java.util.Map;
 @Component
 @Order(-2)
 public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
-
+    
     public GlobalErrorWebExceptionHandler(GlobalErrorAttributes globalErrorAttributes,
-                                          ApplicationContext applicationContext, ServerCodecConfigurer serverCodecConfigurer) {
+            ApplicationContext applicationContext, ServerCodecConfigurer serverCodecConfigurer) {
         super(globalErrorAttributes, new WebProperties.Resources(), applicationContext);
         super.setMessageWriters(serverCodecConfigurer.getWriters());
         super.setMessageReaders(serverCodecConfigurer.getReaders());
     }
-
+    
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes) {
         return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse);
     }
-
+    
     private Mono<ServerResponse> renderErrorResponse(ServerRequest serverRequest) {
         final Map<String, Object> errorAttributes = getErrorAttributes(serverRequest, ErrorAttributeOptions.defaults());
         return ServerResponse.status(HttpStatus.BAD_REQUEST) //
                 .contentType(MediaType.APPLICATION_JSON) //
                 .body(BodyInserters.fromValue(errorAttributes));
     }
-
+    
     @ExceptionHandler(GlobalException.class)
     public ResponseEntity<BaseResponse> handleGlobalException(GlobalException ex) {
         return new ResponseEntity<>(new BaseResponse(ex.getCode(), ex.getMessage()), HttpStatus.OK);
     }
-
+    
 }

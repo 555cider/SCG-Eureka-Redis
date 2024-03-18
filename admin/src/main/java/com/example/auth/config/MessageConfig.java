@@ -1,4 +1,4 @@
-package com.example.admin.config;
+package com.example.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,7 +6,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 @Configuration
 public class MessageConfig {
-
+    
     @Bean
     ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -18,5 +18,5 @@ public class MessageConfig {
         // messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
-
+    
 }

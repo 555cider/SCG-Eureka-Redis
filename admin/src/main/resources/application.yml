@@ -6,6 +6,23 @@ spring:
     name: admin-service
   profiles:
     active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?serverTimezone=Asia/Seoul
+    username: postgres
+    password: "'"
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default-schema: example
+        show-sql: true
+        connection:
+          character-encoding: UTF-8
+          use-unicode: true
 
 eureka:
   instance:
@@ -15,3 +32,9 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka
+
+jwt:
+  key:
+    public: "publicKey"
+    secret: "secretKey"
+  experation: 3600000 # 단위: ms

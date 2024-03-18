@@ -1,4 +1,4 @@
-package com.example.admin.common;
+package com.example.auth.common;
 
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Component
 public class GlobalErrorAttributes extends DefaultErrorAttributes {
-
+    
     @Override
     public Map<String, Object> getErrorAttributes(ServerRequest serverRequest, ErrorAttributeOptions options) {
         Map<String, Object> errorAttributes = super.getErrorAttributes(serverRequest, options);
@@ -22,5 +22,5 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
         }
         return errorAttributes;
     }
-
+    
 }
